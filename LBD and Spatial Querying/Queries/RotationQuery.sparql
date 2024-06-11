@@ -1,0 +1,212 @@
+
+
+### Queries goes one Parent deep
+
+PREFIX bot: <https://w3id.org/bot#>
+PREFIX spatial: <http://example.org/spatial#>
+PREFIX inst: <http://example.org/instances#>
+
+# Query to get the elements and their transformations
+# Only selects m1 to m4
+SELECT DISTINCT ?element ?parent ?absM1Test ?absM2Test ?absM3Test ?absM4Test
+FROM <http://example.org/rotate-position>
+WHERE {
+  ?element a bot:element ;
+        spatial:parent ?parent ;
+        spatial:m1 ?m1 ;
+        spatial:m2 ?m2 ;
+        spatial:m3 ?m3 ;
+        spatial:m4 ?m4 ;
+        spatial:m5 ?m5 ;
+        spatial:m6 ?m6 ;
+        spatial:m7 ?m7 ;
+        spatial:m8 ?m8 ;
+        spatial:m9 ?m9 ;
+        spatial:m10 ?m10 ;
+        spatial:m11 ?m11 ;
+        spatial:m12 ?m12 ;
+        spatial:m13 ?m13 ;
+        spatial:m14 ?m14 ;
+        spatial:m15 ?m15 ;
+        spatial:m16 ?m16 .
+           
+    ?parent spatial:m1 ?pm1 ;
+        spatial:m2 ?pm2 ;
+        spatial:m3 ?pm3 ;
+        spatial:m4 ?pm4 ;
+        spatial:m5 ?pm5 ;
+        spatial:m6 ?pm6 ;
+        spatial:m7 ?pm7 ;
+        spatial:m8 ?pm8 ;
+        spatial:m9 ?pm9 ;
+        spatial:m10 ?pm10 ;
+        spatial:m11 ?pm11 ;
+        spatial:m12 ?pm12 ;
+        spatial:m13 ?pm13 ;
+        spatial:m14 ?pm14 ;
+        spatial:m15 ?pm15 ;
+        spatial:m16 ?pm16 .
+        
+    BIND((?pm1 * ?m1 + ?pm4 * ?m13 + ?pm2 * ?m5 + ?pm3 * ?m9) AS ?absM1Test)
+    BIND((?pm3 * ?m10 + ?pm4 * ?m14 + ?pm1 * ?m2 + ?pm2 * ?m6) AS ?absM2Test)
+    BIND((?pm3 * ?m11 + ?pm4 * ?m15 + ?pm1 * ?m3 + ?pm2 * ?m7) AS ?absM3Test)
+    BIND((?pm3 * ?m12 + ?pm4 * ?m16 + ?pm1 * ?m4 + ?pm2 * ?m8) AS ?absM4Test)
+}
+
+### Queries goes one Parent deep, but only for resources without parents
+
+PREFIX bot: <https://w3id.org/bot#>
+PREFIX spatial: <http://example.org/spatial#>
+PREFIX inst: <http://example.org/instances#>
+
+# Query to get the elements and their transformations
+SELECT DISTINCT ?element ?parent ?absM1Test ?absM2Test ?absM3Test ?absM4Test
+FROM <http://example.org/rotate-position>
+WHERE {
+  ?element a bot:element ;
+           spatial:parent ?parent ;
+           spatial:m1 ?m1 ;
+           spatial:m2 ?m2 ;
+           spatial:m3 ?m3 ;
+           spatial:m4 ?m4 ;
+           spatial:m5 ?m5 ;
+           spatial:m6 ?m6 ;
+           spatial:m7 ?m7 ;
+           spatial:m8 ?m8 ;
+           spatial:m9 ?m9 ;
+           spatial:m10 ?m10 ;
+           spatial:m11 ?m11 ;
+           spatial:m12 ?m12 ;
+           spatial:m13 ?m13 ;
+           spatial:m14 ?m14 ;
+           spatial:m15 ?m15 ;
+           spatial:m16 ?m16 .
+           
+    ?parent spatial:m1 ?pm1 ;
+        spatial:m2 ?pm2 ;
+        spatial:m3 ?pm3 ;
+        spatial:m4 ?pm4 ;
+        spatial:m5 ?pm5 ;
+        spatial:m6 ?pm6 ;
+        spatial:m7 ?pm7 ;
+        spatial:m8 ?pm8 ;
+        spatial:m9 ?pm9 ;
+        spatial:m10 ?pm10 ;
+        spatial:m11 ?pm11 ;
+        spatial:m12 ?pm12 ;
+        spatial:m13 ?pm13 ;
+        spatial:m14 ?pm14 ;
+        spatial:m15 ?pm15 ;
+        spatial:m16 ?pm16 .
+        
+    BIND((?pm1 * ?m1 + ?pm4 * ?m13 + ?pm2 * ?m5 + ?pm3 * ?m9) AS ?absM1Test)
+    BIND((?pm3 * ?m10 + ?pm4 * ?m14 + ?pm1 * ?m2 + ?pm2 * ?m6) AS ?absM2Test)
+    BIND((?pm3 * ?m11 + ?pm4 * ?m15 + ?pm1 * ?m3 + ?pm2 * ?m7) AS ?absM3Test)
+    BIND((?pm3 * ?m12 + ?pm4 * ?m16 + ?pm1 * ?m4 + ?pm2 * ?m8) AS ?absM4Test)
+    
+    OPTIONAL {
+      ?parent spatial:parent ?grandparent .
+    }
+    FILTER (!bound(?grandparent))
+}
+
+### Queries goes two Parents deep
+PREFIX bot: <https://w3id.org/bot#>
+PREFIX spatial: <http://example.org/spatial#>
+PREFIX inst: <http://example.org/instances#>
+
+# Query to get the elements and their transformations
+SELECT ?element ?absM1 ?absM2 ?absM3 ?absM4 ?ancestor ?ancestor2
+FROM <http://example.org/rotate-position>
+WHERE {
+  ?element a bot:element ;
+           spatial:m1 ?m1 ;
+           spatial:m2 ?m2 ;
+           spatial:m3 ?m3 ;
+           spatial:m4 ?m4 ;
+           spatial:m5 ?m5 ;
+           spatial:m6 ?m6 ;
+           spatial:m7 ?m7 ;
+           spatial:m8 ?m8 ;
+           spatial:m9 ?m9 ;
+           spatial:m10 ?m10 ;
+           spatial:m11 ?m11 ;
+           spatial:m12 ?m12 ;
+           spatial:m13 ?m13 ;
+           spatial:m14 ?m14 ;
+           spatial:m15 ?m15 ;
+           spatial:m16 ?m16 .
+    
+    ?element spatial:parent+ ?ancestor .
+    ?ancestor spatial:m1 ?pm1 ;
+              spatial:m2 ?pm2 ;
+              spatial:m3 ?pm3 ;
+              spatial:m4 ?pm4 ;
+              spatial:m5 ?pm5 ;
+              spatial:m6 ?pm6 ;
+              spatial:m7 ?pm7 ;
+              spatial:m8 ?pm8 ;
+              spatial:m9 ?pm9 ;
+              spatial:m10 ?pm10 ;
+              spatial:m11 ?pm11 ;
+              spatial:m12 ?pm12 ;
+              spatial:m13 ?pm13 ;
+              spatial:m14 ?pm14 ;
+              spatial:m15 ?pm15 ;
+              spatial:m16 ?pm16 .
+
+    # Perform the matrix multiplication for the first ancestor
+    BIND((?pm1 * ?m1 + ?pm4 * ?m13 + ?pm2 * ?m5 + ?pm3 * ?m9) AS ?intM1)
+    BIND((?pm3 * ?m10 + ?pm4 * ?m14 + ?pm1 * ?m2 + ?pm2 * ?m6) AS ?intM2)
+    BIND((?pm3 * ?m11 + ?pm4 * ?m15 + ?pm1 * ?m3 + ?pm2 * ?m7) AS ?intM3)
+    BIND((?pm3 * ?m12 + ?pm4 * ?m16 + ?pm1 * ?m4 + ?pm2 * ?m8) AS ?intM4)
+    BIND((?pm5 * ?m1 + ?pm8 * ?m13 + ?pm6 * ?m5 + ?pm7 * ?m9) AS ?intM5)
+    BIND((?pm7 * ?m10 + ?pm8 * ?m14 + ?pm5 * ?m2 + ?pm6 * ?m6) AS ?intM6)
+    BIND((?pm7 * ?m11 + ?pm8 * ?m15 + ?pm5 * ?m3 + ?pm6 * ?m7) AS ?intM7)
+    BIND((?pm7 * ?m12 + ?pm8 * ?m16 + ?pm5 * ?m4 + ?pm6 * ?m8) AS ?intM8)
+    BIND((?pm9 * ?m1 + ?pm12 * ?m13 + ?pm10 * ?m5 + ?pm11 * ?m9) AS ?intM9)
+    BIND((?pm11 * ?m10 + ?pm12 * ?m14 + ?pm9 * ?m2 + ?pm10 * ?m6) AS ?intM10)
+    BIND((?pm11 * ?m11 + ?pm12 * ?m15 + ?pm9 * ?m3 + ?pm10 * ?m7) AS ?intM11)
+    BIND((?pm11 * ?m12 + ?pm12 * ?m16 + ?pm9 * ?m4 + ?pm10 * ?m8) AS ?intM12)
+    BIND((?pm13 * ?m1 + ?pm16 * ?m13 + ?pm14 * ?m5 + ?pm15 * ?m9) AS ?intM13)
+    BIND((?pm15 * ?m10 + ?pm16 * ?m14 + ?pm13 * ?m2 + ?pm14 * ?m6) AS ?intM14)
+    BIND((?pm15 * ?m11 + ?pm16 * ?m15 + ?pm13 * ?m3 + ?pm14 * ?m7) AS ?intM15)
+    BIND((?pm15 * ?m12 + ?pm16 * ?m16 + ?pm13 * ?m4 + ?pm14 * ?m8) AS ?intM16)
+
+    # If there is a second ancestor, continue the transformation
+    ?ancestor spatial:parent+ ?ancestor2 .
+    ?ancestor2 spatial:m1 ?p2m1 ;
+              spatial:m2 ?p2m2 ;
+              spatial:m3 ?p2m3 ;
+              spatial:m4 ?p2m4 ;
+              spatial:m5 ?p2m5 ;
+              spatial:m6 ?p2m6 ;
+              spatial:m7 ?p2m7 ;
+              spatial:m8 ?p2m8 ;
+              spatial:m9 ?p2m9 ;
+              spatial:m10 ?p2m10 ;
+              spatial:m11 ?p2m11 ;
+              spatial:m12 ?p2m12 ;
+              spatial:m13 ?p2m13 ;
+              spatial:m14 ?p2m14 ;
+              spatial:m15 ?p2m15 ;
+              spatial:m16 ?p2m16 .
+
+    BIND((?p2m1 * ?intM1 + ?p2m4 * ?intM13 + ?p2m2 * ?intM5 + ?p2m3 * ?intM9) AS ?absM1)
+    BIND((?p2m3 * ?intM10 + ?p2m4 * ?intM14 + ?p2m1 * ?intM2 + ?p2m2 * ?intM6) AS ?absM2)
+    BIND((?p2m3 * ?intM11 + ?p2m4 * ?intM15 + ?p2m1 * ?intM3 + ?p2m2 * ?intM7) AS ?absM3)
+    BIND((?p2m3 * ?intM12 + ?p2m4 * ?intM16 + ?p2m1 * ?intM4 + ?p2m2 * ?intM8) AS ?absM4)
+    BIND((?p2m5 * ?intM1 + ?p2m8 * ?intM13 + ?p2m6 * ?intM5 + ?p2m7 * ?intM9) AS ?absM5)
+    BIND((?p2m7 * ?intM10 + ?p2m8 * ?intM14 + ?p2m5 * ?intM2 + ?p2m6 * ?intM6) AS ?absM6)
+    BIND((?p2m7 * ?intM11 + ?p2m8 * ?intM15 + ?p2m5 * ?intM3 + ?p2m6 * ?intM7) AS ?absM7)
+    BIND((?p2m7 * ?intM12 + ?p2m8 * ?intM16 + ?p2m5 * ?intM4 + ?p2m6 * ?intM8) AS ?absM8)
+    BIND((?p2m9 * ?intM1 + ?p2m12 * ?intM13 + ?p2m10 * ?intM5 + ?p2m11 * ?intM9) AS ?absM9)
+    BIND((?p2m11 * ?intM10 + ?p2m12 * ?intM14 + ?p2m9 * ?intM2 + ?p2m10 * ?intM6) AS ?absM10)
+    BIND((?p2m11 * ?intM11 + ?p2m12 * ?intM15 + ?p2m9 * ?intM3 + ?p2m10 * ?intM7) AS ?absM11)
+    BIND((?p2m11 * ?intM12 + ?p2m12 * ?intM16 + ?p2m9 * ?intM4 + ?p2m10 * ?intM8) AS ?absM12)
+    BIND((?p2m13 * ?intM1 + ?p2m16 * ?intM13 + ?p2m14 * ?intM5 + ?p2m15 * ?intM9) AS ?absM13)
+    BIND((?p2m15 * ?intM10 + ?p2m16 * ?intM14 + ?p2m13 * ?intM2 + ?p2m14 * ?intM6) AS ?absM14)
+    BIND((?p2m15 * ?intM11 + ?p2m16 * ?intM15 + ?p2m13 * ?intM3 + ?p2m14 * ?intM7) AS ?absM15)
+    BIND((?p2m15 * ?intM12 + ?p2m16 * ?intM16 + ?p2m13 * ?intM4 + ?p2m14 * ?intM8) AS ?absM16)
+  
+}

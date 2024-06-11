@@ -1,0 +1,61 @@
+PREFIX bot: <https://w3id.org/bot#>
+PREFIX spatial: <http://example.org/spatial#>
+PREFIX inst: <http://example.org/instances#>
+
+inst:cube_1 a bot:element ;
+    spatial:m1 -4.371138828673793e-08 ;
+    spatial:m2 -1 ;
+    spatial:m3 0 ;
+    spatial:m4 1 ;
+    spatial:m5 1 ;
+    spatial:m6 -4.371138828673793e-08 ;
+    spatial:m7 0 ;
+    spatial:m8 1 ;
+    spatial:m9 0 ;
+    spatial:m10 0 ;
+    spatial:m11 1 ;
+    spatial:m12 1 ;
+    spatial:m13 0 ;
+    spatial:m14 0 ;
+    spatial:m15 0 ;
+    spatial:m16 1 .
+
+inst:cube_2 a bot:element ;
+    spatial:parent inst:cube_1 ;
+    spatial:m1 1 ;
+    spatial:m2 0 ;
+    spatial:m3 0 ;
+    spatial:m4 1 ;
+    spatial:m5 0 ;
+    spatial:m6 1 ;
+    spatial:m7 0 ;
+    spatial:m8 1 ;
+    spatial:m9 0 ;
+    spatial:m10 0 ;
+    spatial:m11 1 ;
+    spatial:m12 1 ;
+    spatial:m13 0 ;
+    spatial:m14 0 ;
+    spatial:m15 0 ;
+    spatial:m16 1 .
+
+inst:cube_3 a bot:element ;
+    spatial:parent inst:cube_2 ;
+    spatial:m1 1 ;
+    spatial:m2 0 ;
+    spatial:m3 0 ;
+    spatial:m4 1 ;
+    spatial:m5 0 ;
+    spatial:m6 1 ;
+    spatial:m7 0 ;
+    spatial:m8 1 ;
+    spatial:m9 0 ;
+    spatial:m10 0 ;
+    spatial:m11 1 ;
+    spatial:m12 1 ;
+    spatial:m13 0 ;
+    spatial:m14 0 ;
+    spatial:m15 0 ;
+    spatial:m16 1 .
+
+
