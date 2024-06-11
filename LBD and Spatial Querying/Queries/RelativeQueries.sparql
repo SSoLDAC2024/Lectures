@@ -4,7 +4,7 @@ PREFIX bot: <https://w3id.org/bot#>
 PREFIX spatial: <http://example.org/spatial#>
 PREFIX inst: <http://example.org/instances#>
 
-select ?s ?relX ?relY ?relZ (sum(?_absX) as ?absX) (sum(?_absY) as ?absY) (sum(?_absZ) as ?absZ)
+select ?s (sum(?_absX) as ?absX) (sum(?_absY) as ?absY) (sum(?_absZ) as ?absZ)
 FROM <http://example.org/relative-position>
 where {
   ?s a bot:element ;
@@ -12,16 +12,12 @@ where {
      spatial:hasY ?relY ;
      spatial:hasZ ?relZ.
   ?s spatial:hasParent* ?sp.
-  ?sp spatial:hasX ?_X .
-  ?sp spatial:hasY ?_Y .
-  ?sp spatial:hasZ ?_Z .
-
-  BIND(?_X as ?_absX)
-  BIND(?_Y as ?_absY)
-  BIND(?_Z as ?_absZ)
+  ?sp spatial:hasX ?_absX .
+  ?sp spatial:hasY ?_absY .
+  ?sp spatial:hasZ ?_absZ .
 
 }
-group by ?s ?relX ?relY ?relZ
+group by ?s
 
 
 # With filter for position
@@ -38,13 +34,9 @@ WHERE {
      spatial:hasY ?relY ;
      spatial:hasZ ?relZ.
   ?s spatial:hasParent* ?sp.
-  ?sp spatial:hasX ?_X .
-  ?sp spatial:hasY ?_Y .
-  ?sp spatial:hasZ ?_Z .
-
-  BIND(?_X as ?_absX)
-  BIND(?_Y as ?_absY)
-  BIND(?_Z as ?_absZ)
+  ?sp spatial:hasX ?_absX .
+  ?sp spatial:hasY ?_absY .
+  ?sp spatial:hasZ ?_absZ .
 
 }
 GROUP BY ?s
