@@ -1,0 +1,3 @@
+﻿Id;Component Type;Location Component;Vertical Damage Location ;Tranversal Damage Location ;Damage Type;Damage Size;Picture Name
+21;Abutment;Front; Bottom;Left;WaterDamage;“one spot”;PictureA
+35;Abutment;Front and Rear;-;-;Crack;“affects entire component”;-

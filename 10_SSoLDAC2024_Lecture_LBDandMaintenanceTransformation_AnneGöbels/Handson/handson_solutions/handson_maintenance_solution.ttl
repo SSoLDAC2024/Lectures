@@ -1,0 +1,37 @@
+@prefix brcomp: <https://w3id.org/brcomp#> .
+@prefix dot: <https://w3id.org/dot#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix aoi: <https://w3id.org/aoi#>.
+
+@prefix ex: <http://example.org/myLegacyDataModelOntology#> .
+@prefix : <http://example.org/BridgeX/Inspection2024/> .
+
+:Damage21 a ex:Damage, dot:Damage;
+    ex:Id 21;
+    ex:ComponentType ex:Abutment;
+    ex:LocationComponent ex:Front;
+    ex:VerticalDamageLocation ex:Bottom;
+    ex:TransversalDamageLocation ex:Left;
+    ex:DamageType ex:WaterDamage;
+    ex:DamageSize "one spot";
+    ex:PictureName "PictureA".
+
+:Damage35 a ex:Damage, dot:Damage;
+    ex:Id 35;
+    ex:ComponentType ex:Abutment;
+    ex:LocationComponent ex:Front, ex:Rear;
+    ex:DamageType ex:Crack;
+    ex:DamageSize "affects entire component".
+
+:AbutmentFront a ex:Abutment, brcomp:Abutment;
+    ex:LocationComponent ex:Front;
+    dot:hasDamage :Damage35;
+    aoi:hasAreaOfInterest :AreaOfInterest_21.
+
+:AbutmentRear a ex:Abutment, brcomp:Abutment;
+    ex:LocationComponent ex:Rear;
+    dot:hasDamage :Damage35.
+
+:AreaOfInterest_21 a aoi:AreaOfInterest, ex:Bottom, ex:Left;
+    aoi:locatesDamage :Damage21.
+

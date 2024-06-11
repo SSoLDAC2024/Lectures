@@ -1,0 +1,47 @@
+# Convert relative positions to absolute positions
+
+PREFIX bot: <https://w3id.org/bot#>
+PREFIX spatial: <http://example.org/spatial#>
+PREFIX inst: <http://example.org/instances#>
+
+select ?s (sum(?_absX) as ?absX) (sum(?_absY) as ?absY) (sum(?_absZ) as ?absZ)
+FROM <http://example.org/relative-position>
+where {
+  ?s a bot:element ;
+     spatial:hasX ?relX ;
+     spatial:hasY ?relY ;
+     spatial:hasZ ?relZ.
+  ?s spatial:hasParent* ?sp.
+  ?sp spatial:hasX ?_absX .
+  ?sp spatial:hasY ?_absY .
+  ?sp spatial:hasZ ?_absZ .
+
+}
+group by ?s
+
+
+# With filter for position
+
+PREFIX bot: <https://w3id.org/bot#>
+PREFIX spatial: <http://example.org/spatial#>
+PREFIX inst: <http://example.org/instances#>
+
+SELECT ?s (sum(?_absX) as ?absX) (sum(?_absY) as ?absY) (sum(?_absZ) as ?absZ)
+FROM <http://example.org/relative-position>
+WHERE {
+  ?s a bot:element ;
+     spatial:hasX ?relX ;
+     spatial:hasY ?relY ;
+     spatial:hasZ ?relZ.
+  ?s spatial:hasParent* ?sp.
+  ?sp spatial:hasX ?_absX .
+  ?sp spatial:hasY ?_absY .
+  ?sp spatial:hasZ ?_absZ .
+
+}
+GROUP BY ?s
+HAVING(
+    ?absX >= -0.5 && ?absX <= 1.5 &&
+    ?absY >= -0.5 && ?absY <= 1.5 &&
+    ?absZ >= -0.5 && ?absZ <= 1.5
+)
